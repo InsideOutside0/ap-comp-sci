@@ -21,12 +21,27 @@ public class ConvertSystems {
 
     public static int getKeyFromValue(HashMap<Integer, String> map, String value) {
         // Iterates through each entry in the HashMap to find the right key
-        for (int entry : map.keySet()) {
-            if (map.get(entry).equals(value)) {
-                return entry;
+        for (int num : map.keySet()) {
+            if (map.get(num).equals(value)) {
+                return num;
             }
         }
         return -1;
+    }
+
+    public static Boolean checkValidity(String num, int base) {
+        HashMap<Integer, String> map = new HashMap<>();
+        hexValuesToMap(map);
+        for (int i = 0; i<num.length(); i++) {
+            int n; // will be the int version of the current digit
+            char c = num.charAt(i);
+            if (Character.isAlphabetic(c)) {
+                try { n = Integer.parseInt(map.get(c)); } // check if the letter is in the map
+                catch (Exception ex) { return false; }
+            } else n = Integer.parseInt(String.valueOf(c));
+            if (n>=base) return false;
+        }
+        return true;
     }
 
     public static String fromDecimal(int num, int base) {
@@ -41,9 +56,9 @@ public class ConvertSystems {
             placeValues++;
         }
         int digit;
-        for (int i = placeValues; i>=1; i--) {
-            digit = num / (int) Math.pow(base, i-1); // get the place value
-            num -= digit*Math.pow(base, i-1); //remove that place value from the number
+        for (int i = placeValues-1; i>=0; i--) {
+            digit = num / (int) Math.pow(base, i); // get the place value
+            num -= digit*Math.pow(base, i); //remove that place value from the number
             if (digit >= 10) {
                 s+=map.get(digit); // for 10-15
             } else {
@@ -53,13 +68,12 @@ public class ConvertSystems {
         return s;
     }
 
-    public static int parseNonDecimal(String s, int base) {
+    public static int toDecimal(String s, int base) {
         int result=0;
-        int len = s.length();
-        int exp = len-1;
+        int exp = s.length()-1;
         HashMap<Integer, String> map = new HashMap<>();
         hexValuesToMap(map);
-        for (int i = 0; i<len; i++) {
+        for (int i = 0; i<s.length(); i++) {
             char c = s.charAt(i);
             if (Character.isAlphabetic(c)) { // for hex values
                 c=Character.toLowerCase(c); // the map does not use upper case
@@ -73,20 +87,23 @@ public class ConvertSystems {
     }
 
     public static void convert(String num, int base) {
+        if (!checkValidity(num, base)) {
+            System.out.println("Not a valid number for this base");
+            return;
+        }
         int dec;
         switch (base) {
             case 2:
-                dec = parseNonDecimal(num, 2);
+                dec = toDecimal(num, 2);
                 System.out.println("Octal: " + fromDecimal(dec, 8));
                 System.out.println("Decimal: " + dec);
                 System.out.println("Hex: " +fromDecimal(dec, 16));
                 break;
             case 8:
-                dec = parseNonDecimal(num, 8);
+                dec = toDecimal(num, 8);
                 System.out.println("Binary: " + fromDecimal(dec, 2));
                 System.out.println("Decimal: " + dec);
                 System.out.println("Hex: " +fromDecimal(dec, 16));
-
                 break;
             case 10:
                 dec = Integer.parseInt(num);
@@ -95,7 +112,7 @@ public class ConvertSystems {
                 System.out.println("Hex: " +fromDecimal(dec, 16));
                 break;
             case 16:
-                dec = parseNonDecimal(num, 16);
+                dec = toDecimal(num, 16);
                 System.out.println("Binary: " + fromDecimal(dec, 2));
                 System.out.println("Decimal: " + dec);
                 System.out.println("Octal: " + fromDecimal(dec, 8));
