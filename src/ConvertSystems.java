@@ -45,7 +45,6 @@ public class ConvertSystems {
     }
 
     public static String fromDecimal(int num, int base) {
-        if (base > 16) return "Base too large."; // This function technically works for all bases 2-15
         String s = "";
         HashMap<Integer, String> map = new HashMap<>();
         hexValuesToMap(map);
@@ -92,27 +91,25 @@ public class ConvertSystems {
             return;
         }
         int dec;
+        if (base != 10) dec = toDecimal(num, base);
+        else dec = Integer.parseInt(num);
         switch (base) {
             case 2:
-                dec = toDecimal(num, 2);
                 System.out.println("Octal: " + fromDecimal(dec, 8));
                 System.out.println("Decimal: " + dec);
                 System.out.println("Hex: " +fromDecimal(dec, 16));
                 break;
             case 8:
-                dec = toDecimal(num, 8);
                 System.out.println("Binary: " + fromDecimal(dec, 2));
                 System.out.println("Decimal: " + dec);
                 System.out.println("Hex: " +fromDecimal(dec, 16));
                 break;
             case 10:
-                dec = Integer.parseInt(num);
                 System.out.println("Binary: " + fromDecimal(dec, 2));
                 System.out.println("Octal: " + fromDecimal(dec, 8));
                 System.out.println("Hex: " +fromDecimal(dec, 16));
                 break;
             case 16:
-                dec = toDecimal(num, 16);
                 System.out.println("Binary: " + fromDecimal(dec, 2));
                 System.out.println("Decimal: " + dec);
                 System.out.println("Octal: " + fromDecimal(dec, 8));
