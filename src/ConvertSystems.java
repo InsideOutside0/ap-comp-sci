@@ -35,9 +35,12 @@ public class ConvertSystems {
         for (int i = 0; i<num.length(); i++) {
             int n; // will be the int version of the current digit
             char c = num.charAt(i);
-            if (Character.isAlphabetic(c)) {
-                try { n = Integer.parseInt(map.get(c)); } // check if the letter is in the map
-                catch (Exception ex) { return false; }
+            if (!Character.isDigit(c)) {
+                try {
+                    n = Integer.parseInt(map.get(c));
+                } catch (Exception ex) {
+                    return false;
+                }
             } else n = Integer.parseInt(String.valueOf(c));
             if (n>=base) return false;
         }
