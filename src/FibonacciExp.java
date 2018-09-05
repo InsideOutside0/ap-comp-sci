@@ -17,8 +17,18 @@ public class FibonacciExp {
         return fibonacci(term-1)+fibonacci(term-2);
     }
 
+    public static void printFibonacci(int terms) {
+        System.out.println();
+        if (terms<1) System.out.println(fibonacci(terms));
+        else {
+            for (int i=1; i<=terms; i++) {
+                System.out.println(fibonacci(i));
+            }
+        }
+    }
+
     public static double exp(int base, int power) {
-        if (base==0) return 0; //the function cannot return undefined
+        if (base==0) return 0; //the function cannot return undefined if power=0 though
         else if (power==0) return 1;
         double total = base;
         boolean isNeg = false;
@@ -41,7 +51,7 @@ public class FibonacciExp {
         int base = sc.nextInt();
         System.out.println("Enter a number as the exponent");
         int power = sc.nextInt();
-        System.out.println("\n"+fibonacci(term));
-        System.out.println(exp(base, power));
+        printFibonacci(term);
+        System.out.println("\n" + exp(base, power));
     }
 }
