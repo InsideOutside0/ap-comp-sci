@@ -43,6 +43,17 @@ public class FibonacciExp {
         return total;
     }
 
+    public static void printExp(int base, int power) {
+        System.out.println();
+        if (power<0) {
+            System.out.println(exp(base, power));
+        } else {
+            for (int i = 0; i<=power; i++) {
+                System.out.println(exp(base, i));
+            }
+        }
+    }
+
     public static void main (String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter a term number in the fibonacci sequence");
@@ -52,6 +63,6 @@ public class FibonacciExp {
         System.out.println("Enter a number as the exponent");
         int power = sc.nextInt();
         printFibonacci(term);
-        System.out.println("\n" + exp(base, power));
+        printExp(base, power);
     }
 }
