@@ -54,6 +54,15 @@ public class FibonacciExp {
         }
     }
 
+    public static int floor(double num) {
+        return (int)num;
+    }
+
+    public static int ceiling(double num) {
+        if (num%1==0) return (int)num;
+        else return (int)num +1;
+    }
+
     public static void main (String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter a term number in the fibonacci sequence");
@@ -64,5 +73,8 @@ public class FibonacciExp {
         int power = sc.nextInt();
         printFibonacci(term);
         printExp(base, power);
+        System.out.println("\n"+floor(2.01));
+        System.out.println("\n"+ceiling(3.00));
+        System.out.println("\n"+ceiling(3.01));
     }
 }
