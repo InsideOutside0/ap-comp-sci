@@ -4,8 +4,6 @@ AP Computer Science
 Change Giver/Maker
  */
 
-import java.util.HashMap;
-
 public class ChangeMaker {
 
     public static String makeChange(double price, double payment) {
