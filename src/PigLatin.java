@@ -1,5 +1,14 @@
+/*
+    Sam Stahl
+    AP Computer Science
+    PigLatinn
+ */
+
+import java.util.ArrayList;
+
 public class PigLatin {
 
+    // This better work for you because both the regex and my function failed to split spaces properly
 
     private String[] words;
 
@@ -8,31 +17,34 @@ public class PigLatin {
     }
 
     public static String[] splitSpace(String str) {
-        String[] output = new String[];
-        String s = " ";
-        char space = s.charAt(0);
+        ArrayList<String> output = new ArrayList<>();
         while (str.length()>0) {
-            for (int i= 0; i<str.length(); i++) {
-                if (str.charAt(i) == space) {
-                    output[i] = str.substring(0, i);
-                    str = str.substring(i+1);
+            System.out.println(str.length());
+            for (int i = 0; i < str.length(); i++) {
+                System.out.println(i);
+                System.out.println(str.charAt(i));
+                if (Character.isWhitespace(str.charAt(i))) { // despite there being obvious whitespace it DOESN'T WORK
+                    output.add(str.substring(0, i));
+                    str = str.substring(i + 1);
                     break;
+                } else {
+                    output.add(str);
+                    str = "";
                 }
             }
-        }
-        return output;
+         }
+        String[] outputArray = output.toArray(new String[output.size()]);
+        return outputArray;
     }
 
     public static String getConsonants(String str) {
         String[] VOWELS = {"a", "e", "i", "o", "u"};
         String output = "";
         for (int i = 0; i<str.length(); i++) {
-            for (int j = 0; j<VOWELS.length; j++) {
-                if (Character.toString(str.charAt(i)).equals(VOWELS[j])) {
-                    return output;
-                }
-                output+=str.charAt(i);
+            for (String s : VOWELS) {
+                if (Character.toString(str.charAt(i)).equals(s)) return output;
             }
+            output+=str.charAt(i);
         }
         return str;
     }
@@ -42,6 +54,7 @@ public class PigLatin {
         for (int i = 0; i<words.length; i++) {
             String word = words[i].toLowerCase();
             String beginning = getConsonants(word);
+            System.out.println(beginning);
             if (beginning.length() == 0) {
                 output += word + "way ";
             } else {
@@ -55,7 +68,7 @@ public class PigLatin {
     }
 
     public static void main (String[] args) {
-        PigLatin pig = new PigLatin("Hello there ladies and gents");
+        PigLatin pig = new PigLatin("egg is good");
         pig.latinize(pig.words);
     }
 
