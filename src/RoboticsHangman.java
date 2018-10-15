@@ -29,7 +29,7 @@ public class RoboticsHangman {
             System.out.println("Guess a letter you commie");
             char ch = sc.nextLine().toLowerCase().charAt(0);
             for (int i = 0; i<word.length(); i++) {
-                if (ch == wordNew.charAt(i)) {
+                if (ch == wordNew.charAt(i) && !bools[i]) {
                     bools[i] = true;
                     numGuessed++;
                 }
