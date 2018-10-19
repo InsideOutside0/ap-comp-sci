@@ -12,17 +12,22 @@ public class RoboticsHangman {
     public static void hangman(String word) {
         int deathCount = 10;
         boolean[] bools = new boolean[word.length()];
-        for (int i = 0; i<word.length(); i++) {
-            bools[i] = false;
-        }
+        for (int i = 0; i<word.length(); i++) bools[i] = false;
         String wordNew = word.toLowerCase();
         Scanner sc = new Scanner(System.in);
         int numGuessed = 0;
         while(numGuessed!=word.length() && deathCount>0) {
+            boolean alreadyGuseed =false;
             int numGuessedInitial = numGuessed;
             for (int i = 0; i<word.length(); i++) {
-                if (!bools[i]) System.out.print(" _ ");
-                else System.out.print(word.charAt(i));
+                if (!bools[i]) {
+                    if (word.charAt(i) != ' ' && word.charAt(i) != '-') System.out.print(" _ ");
+                    else {
+                        System.out.print(" "+word.charAt(i)+" ");
+                        bools[i] = true;
+                    }
+                }
+                else System.out.print(" "+word.charAt(i)+" ");
             }
             System.out.println();
             System.out.println("Guesses left: " + deathCount);
@@ -32,9 +37,12 @@ public class RoboticsHangman {
                 if (ch == wordNew.charAt(i) && !bools[i]) {
                     bools[i] = true;
                     numGuessed++;
+                } else if (ch == wordNew.charAt(i) && bools[i]) {
+                    System.out.println("You already guessed that!");
+                    alreadyGuseed = true;
                 }
             }
-            if (numGuessedInitial==numGuessed) {
+            if (numGuessedInitial==numGuessed && !alreadyGuseed) {
                 System.out.println("WRONG");
                 deathCount--;
             }
@@ -43,7 +51,7 @@ public class RoboticsHangman {
         if (deathCount==0) System.out.println("you lose, you loser");
         else {
             System.out.println(word);
-            System.out.println("you won, you piece of crap");
+            System.out.println("you won, congratu-frickin-lations");
         }
     }
 
