@@ -1,8 +1,8 @@
 public class MegaMillions {
-    int[] comboPool = new int[70];
-    int[] megaPool = new int[25];
-    int[] ticket = new int[6];
-    int[] winningNumbers = new int[6];
+    private int[] comboPool = new int[70];
+    private int[] megaPool = new int[25];
+    private int[] ticket = new int[6];
+    private int[] winningNumbers;
 
     public void fillArrays() {
         for (int i = 0; i<70; i++) comboPool[i] = i+1;
@@ -35,30 +35,30 @@ public class MegaMillions {
         int[] output = new int[6];
         for (int i = 0; i<5; i++) {
             boolean neverUsed = false;
+            int rand = (int) (Math.random() * 70);
             while (!neverUsed) { // Check for identical numbers
                 neverUsed = true;
-                int rand = (int) (Math.random() * 70);
                 for (int j = 0; j<i; j++) {
                     if (rand == output[j]) {
                         rand = (int) (Math.random() * 70);
                         neverUsed = false;
                     }
                 }
-                output[i] = comboPool[rand];
             }
+            output[i] = comboPool[rand];
         }
         output[5] = megaPool[(int)(Math.random()*25)];
+        int[] newOut = new int[5];
+        for (int i = 0; i<5; i++) newOut[i] = output[i];
+        int[] ascWin = ascendingOrder(newOut);
+        for (int i = 0; i<5; i++) output[i] = ascWin[i];
         return output;
     }
 
     public MegaMillions(int[] ticket) {
         fillArrays();
         winningNumbers = winningNumbers();
-        int[] newTicket = new int[5];
-        for (int i = 0; i<5; i++) newTicket[i] = ticket[i];
-        int[] ascTicket = ascendingOrder(newTicket);
-        for (int i = 0; i<5; i++) this.ticket[i] = ascTicket[i];
-        this.ticket[5] = ticket[5];
+        for (int i = 0; i<6; i++) this.ticket[i] = ticket[i];
     }
 
     public int[] matchingNumbers() {
@@ -95,10 +95,10 @@ public class MegaMillions {
         System.out.print("Ticket: ");
         for (int i = 0; i<6; i++) System.out.print(m.ticket[i] + " ");
         System.out.println();
-        int[] matchingNums = m.matchingNumbers();
         System.out.print("Winning: ");
         for (int i = 0; i<6; i++) System.out.print(m.winningNumbers[i] + " ");
         System.out.println();
+        int[] matchingNums = m.matchingNumbers();
         System.out.print("Matching: ");
         for (int i = 0; i<matchingNums.length; i++) System.out.print(matchingNums[i] + " ");
     }
