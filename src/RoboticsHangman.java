@@ -1,6 +1,5 @@
 import java.util.Scanner;
 import java.util.Random;
-
 public class RoboticsHangman {
 
     public static String generateWord(String[] words) {

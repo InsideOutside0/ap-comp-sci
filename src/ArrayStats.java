@@ -3,6 +3,7 @@ Sam Stahl
 AP Computer Science
 ArrayStatistics
  */
+
 public class ArrayStats {
 
     public static int arrMin(int[] arr) {
