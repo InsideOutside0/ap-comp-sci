@@ -55,7 +55,7 @@ public class PolynomialFunction {
     public double evaluate(double x) {
         double o = 0;
         for (int i = 0; i<this.coefficientArray.length; i++) o += this.coefficientArray[i]*Math.pow(x, expArray[i]);
-        o += this.constant;
+        if (knownC) o += this.constant;
         return o;
     }
 
@@ -73,6 +73,11 @@ public class PolynomialFunction {
         return new PolynomialFunction(c);
     }
 
+    public double findDefiniteIntegral(double a, double b) {
+        PolynomialFunction n = this.findIntegral();
+        return n.evaluate(b) - n.evaluate(a);
+    }
+
     public static void main(String args[]) {
         double[] coefs = {2, -3, 4};
         PolynomialFunction f = new PolynomialFunction(coefs, 2);
@@ -81,6 +86,7 @@ public class PolynomialFunction {
         System.out.println(f.findDerivative());
         System.out.println(f.findIntegral());
         System.out.println(f.findDerivative().findIntegral());
+        System.out.println(f.findDefiniteIntegral(0, 3));
     }
 
 }
