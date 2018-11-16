@@ -52,13 +52,6 @@ public class PolynomialFunction {
         return output;
     }
 
-    public PolynomialFunction findIntegral() {
-        double[] c = new double[this.coefficientArray.length + 1];
-        for (int i = 0; i<this.coefficientArray.length; i++) c[i] = this.coefficientArray[i] / (this.expArray[i] + 1);
-        c[c.length-1] = this.constant;
-        return new PolynomialFunction(c);
-    }
-
     public double evaluate(double x) {
         double o = 0;
         for (int i = 0; i<this.coefficientArray.length; i++) o += this.coefficientArray[i]*Math.pow(x, expArray[i]);
@@ -71,6 +64,13 @@ public class PolynomialFunction {
         double constant =  this.coefficientArray[coefficientArray.length-1];
         for (int i = 0; i<c.length; i++) c[i] = this.coefficientArray[i] * this.expArray[i];
         return new PolynomialFunction(c, constant);
+    }
+
+    public PolynomialFunction findIntegral() {
+        double[] c = new double[this.coefficientArray.length + 1];
+        for (int i = 0; i<this.coefficientArray.length; i++) c[i] = this.coefficientArray[i] / (this.expArray[i] + 1);
+        c[c.length-1] = this.constant;
+        return new PolynomialFunction(c);
     }
 
     public static void main(String args[]) {
