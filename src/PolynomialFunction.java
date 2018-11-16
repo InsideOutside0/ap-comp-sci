@@ -78,8 +78,8 @@ public class PolynomialFunction {
         PolynomialFunction f = new PolynomialFunction(coefs, 2);
         System.out.println(f);
         System.out.println(f.evaluate(4));
-        System.out.println(f.findIntegral());
         System.out.println(f.findDerivative());
+        System.out.println(f.findIntegral());
         System.out.println(f.findDerivative().findIntegral());
     }
 
