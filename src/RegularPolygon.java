@@ -6,7 +6,7 @@ public class RegularPolygon extends Polygon {
     public RegularPolygon(int sides, double sideLength) {
         super(sides);
         this.sideLength = sideLength;
-        this.angle = Math.toRadians(180*(sides-2));
+        this.angle = Math.toRadians((180*(sides-2))/(double)sides);
         this.apothem = (sideLength/2)*Math.tan(this.angle/2);
     }
 
