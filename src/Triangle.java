@@ -1,22 +1,28 @@
 public class Triangle extends Polygon {
     private double[] sides;
-    private double[] angles; // in radians
 
-    public Triangle(double[] sides, double[] angles) {
+    public Triangle(double[] sides) {
         super(3);
-        for (int i = 0; i<3; i++) this.sides[i] = sides[i];
-        for (int i = 0; i<3; i++) this.angles[i] = angles[i];
-        // sides[i] is opposite of angles[i]
+        this.sides = sides;
     }
 
     public double area() {
-        return 0.5*sides[0]*sides[1]*Math.sin(angles[2]);
+        double semiPerm = this.semiPerimeter();
+        double quantity = semiPerm;
+        for (double side : this.sides) quantity*=(semiPerm - side);
+        return Math.sqrt(quantity);
     }
 
     public double perimeter() {
         double sum = 0;
-        for (double side : sides) sum+=side;
+        for (double side : this.sides) sum+=side;
         return sum;
+    }
+
+    public double semiPerimeter() {
+        double sum = 0;
+        for (double side : this.sides) sum+=side;
+        return sum/2;
     }
 
     public int numberOfDiagonals() {
