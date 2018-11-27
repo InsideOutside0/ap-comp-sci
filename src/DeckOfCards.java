@@ -28,8 +28,7 @@ public class DeckOfCards {
         ArrayList<Card> hand = new ArrayList<>();
         for (int i = 0; i<numberOfCards; i++) {
             int n = (int)(Math.random()*tempDeck.size());
-            hand.add(tempDeck.get(n));
-            tempDeck.remove(n);
+            hand.add(tempDeck.remove(n));
         }
         return hand;
     }
