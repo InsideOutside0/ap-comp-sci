@@ -7,8 +7,6 @@ public class ScientificNotation {
     public ScientificNotation(double num) {
         //initializes digits ArrayList to list all the digits in num, excluding the decimal point
         String numString = Double.toString(num); //converts a double into a String
-        if (numString.substring(0,1).equals("0"))
-            throw new IllegalArgumentException("Do not start number with 0, start with decimal point instead");
         for(int k = 0; k < numString.length(); k++) {
             digits.add(numString.substring(k, k+1));
         }
@@ -23,14 +21,14 @@ public class ScientificNotation {
     }
 
     public static int getExp(String n) {
-        if (n.substring(n.length()-1).equals(".")) return n.length()-2;
-        else if (!hasDecimal(n)) return n.length()-1;
-        else if (n.substring(0, 1).equals(".")) {
+        if (!hasDecimal(n)) return n.length()-1;
+
+        else if (n.substring(1, 2).equals(".")) {
             for (int i = 0; i<n.length(); i++)
-                if (n.substring(i, i+1).equals(".") && i<n.length()-1) return i-1;
+                if (!n.substring(i, i+1).equals(".") && !n.substring(i, i+1).equals("0") && i<n.length()-1) return (i-1)*-1;
         } else {
-            for (int i = 0; i<n.length(); i++)
-                if (!n.substring(i, i+1).equals(".") && !n.substring(i, i+1).equals("0") && i<n.length()-1) return i*-1;
+            for (int i = 0; i < n.length(); i++)
+                if (n.substring(i, i + 1).equals(".")) return i - 1;
         }
         return 0;
     }
@@ -42,7 +40,7 @@ public class ScientificNotation {
     public String toSciNot(int sigFigs) {
         if (sigFigs<=0) throw new IllegalArgumentException("sigfigs must be larger than 0");
         String output = digits.remove(0);
-        sigFigs--;
+        if (!output.equals("0")) sigFigs--;
         if (sigFigs>0) {
             output+=".";
             while (sigFigs > 0 && digits.size() > 0) {
@@ -51,12 +49,13 @@ public class ScientificNotation {
             }
             if (sigFigs > 0) for (int i = 0; i < sigFigs; i++) output += "0";
         }
-        if (this.exponent != 0) output+=" x 10^" + this.exponent;
+        if (this.exponent != 0) output+=" x 10";
+        if (this.exponent != 1 && this.exponent !=-1 && this.exponent !=0) output+="^" + this.exponent;
         return output;
     }
 
     public static void main (String[] args) {
-        ScientificNotation s = new ScientificNotation(23456.78);
+        ScientificNotation s = new ScientificNotation(0.023);
         System.out.println(s.toSciNot(3));
     }
 }
