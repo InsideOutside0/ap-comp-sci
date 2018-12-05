@@ -7,25 +7,15 @@ public class ScientificNotation {
     public ScientificNotation(double num) {
         //initializes digits ArrayList to list all the digits in num, excluding the decimal point
         String numString = Double.toString(num); //converts a double into a String
-        for(int k = 0; k < numString.length(); k++) {
-            digits.add(numString.substring(k, k+1));
-        }
+        for(int i = 0; i < numString.length(); i++) digits.add(numString.substring(i, i+1));
         digits.remove(digits.indexOf("."));
         this.exponent = getExp(numString);
     }
 
-    public static boolean hasDecimal (String n) {
-        if (n.substring(n.length()-1).equals(".")) return true;
-        for (int i = 0; i<n.length(); i++) if (n.substring(i, i+1).equals(".")) return true;
-        return false;
-    }
-
     public static int getExp(String n) {
-        if (!hasDecimal(n)) return n.length()-1;
-
-        else if (n.substring(1, 2).equals(".")) {
+        if (n.substring(0, 1).equals("0")) {
             for (int i = 0; i<n.length(); i++)
-                if (!n.substring(i, i+1).equals(".") && !n.substring(i, i+1).equals("0") && i<n.length()-1) return (i-1)*-1;
+                if (!n.substring(i, i+1).equals(".") && !n.substring(i, i+1).equals("0")) return (i-1)*-1;
         } else {
             for (int i = 0; i < n.length(); i++)
                 if (n.substring(i, i + 1).equals(".")) return i - 1;
@@ -39,7 +29,13 @@ public class ScientificNotation {
 
     public String toSciNot(int sigFigs) {
         if (sigFigs<=0) throw new IllegalArgumentException("sigfigs must be larger than 0");
-        String output = digits.remove(0);
+        String output = "";
+        for (int i = 0; i<this.digits.size(); i++) {
+            if (!digits.get(i).equals("0") && !digits.get(i).equals(".")) {
+                output+=digits.remove(i);
+                break;
+            } else digits.remove(i);
+        }
         if (!output.equals("0")) sigFigs--;
         if (sigFigs>0) {
             output+=".";
@@ -55,7 +51,7 @@ public class ScientificNotation {
     }
 
     public static void main (String[] args) {
-        ScientificNotation s = new ScientificNotation(0.023);
+        ScientificNotation s = new ScientificNotation(.02);
         System.out.println(s.toSciNot(3));
     }
 }
