@@ -4,6 +4,8 @@ public class Checkers {
     private CheckerBoard gameBoard; //represents the board for a checkers game
     private ArrayList<CheckerPiece> blues;//lists all of the blue pieces on the board
     private ArrayList<CheckerPiece> golds;//lists all of the gold pieces on the board
+    private final CheckerPiece.PieceColor blue = CheckerPiece.PieceColor.Blue;
+    private final CheckerPiece.PieceColor gold = CheckerPiece.PieceColor.Gold;
 
     public Checkers() {
         this.gameBoard = new CheckerBoard();
@@ -23,6 +25,41 @@ public class Checkers {
                     this.blues.add(new CheckerPiece(i, j, CheckerPiece.PieceColor.Blue, false));
                 }
                 current2++;
+            }
+        }
+    }
+
+    public boolean isClear(int x, int y) {
+        if (x<0 || y<0) return false;
+        for (CheckerPiece c : this.blues) if (c.getRowIndex()==x && c.getColIndex()==y) return false;
+        for (CheckerPiece c : this.golds) if (c.getRowIndex()==x && c.getColIndex()==y) return false;
+        return true;
+    }
+
+    public void movePieceLeft(CheckerPiece c) {
+        if (c.getPieceColor()==gold) {
+            if (this.isClear(c.getRowIndex()-1, c.getColIndex()-1)) {
+                this.golds.add(c.move(CheckerPiece.Direction.Left));
+                this.golds.remove(c);
+            }
+        } else {
+            if (this.isClear(c.getRowIndex()+1, c.getColIndex()+1)) { // from the other perspective
+                this.blues.add(c.moveBack(CheckerPiece.Direction.Right));
+                this.blues.remove(c);
+            }
+        }
+    }
+
+    public void movePieceRight(CheckerPiece c) {
+        if (c.getPieceColor()==gold) {
+            if (this.isClear(c.getRowIndex()-1, c.getColIndex()+1)) {
+                this.golds.add(c.move(CheckerPiece.Direction.Right));
+                this.golds.remove(c);
+            }
+        } else {
+            if (this.isClear(c.getRowIndex()+1, c.getColIndex()-1)) { // from the other perspective
+                this.blues.add(c.moveBack(CheckerPiece.Direction.Left));
+                this.blues.remove(c);
             }
         }
     }

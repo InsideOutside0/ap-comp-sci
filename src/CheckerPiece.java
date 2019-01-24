@@ -20,6 +20,18 @@ public class CheckerPiece {
         this.isKing = isKing;
     }
 
+    public int getRowIndex() {
+        return rowIndex;
+    }
+
+    public int getColIndex() {
+        return colIndex;
+    }
+
+    public PieceColor getPieceColor() {
+        return pieceColor;
+    }
+
     public String toString() {
         return rowIndex + ", " + colIndex + ", " + pieceColor;
     }
